@@ -1,0 +1,29 @@
+// Configuration for IDEs only.
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": ".",
+    "paths": {
+      "@mfe/ng": [
+        "./"
+      ],
+      "@mfe/ng/*": [
+        "./*"
+      ]
+    },
+  },
+  "angularCompilerOptions": {
+    "annotateForClosureCompiler": true,
+    "skipTemplateCodegen": true,
+    "strictMetadataEmit": true,
+    "fullTemplateTypeCheck": true,
+    "strictTemplates": true,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "enableResourceInlining": true
+  },
+  "include": [
+    "./**/*.ts"
+  ]
+}
