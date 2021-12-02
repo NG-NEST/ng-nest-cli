@@ -1,3 +1,3 @@
-export interface NgPackage {
+export interface XPackage {
   name: string;
 }

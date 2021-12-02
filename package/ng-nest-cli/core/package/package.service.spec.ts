@@ -1,9 +1,9 @@
-import { MfePackageService } from './package.service';
+import { XPackageService } from './package.service';
 
 describe('package', () => {
-  let service: MfePackageService;
+  let service: XPackageService;
   beforeEach(() => {
-    service = new MfePackageService();
+    service = new XPackageService();
   });
 
   it('#getValue should return real value', () => {

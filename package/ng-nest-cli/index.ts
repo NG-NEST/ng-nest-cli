@@ -1,1 +1,1 @@
-export * from '@mfe/ng/core';
+export * from '@ng-nest/cli/core';

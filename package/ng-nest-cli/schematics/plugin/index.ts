@@ -1,16 +1,6 @@
-import {
-  Rule,
-  Tree,
-  SchematicsException,
-  apply,
-  url,
-  applyTemplates,
-  move,
-  chain,
-  mergeWith
-} from '@angular-devkit/schematics';
+import { Rule, Tree, SchematicsException, chain } from '@angular-devkit/schematics';
 
-import { strings, normalize, virtualFs, workspaces } from '@angular-devkit/core';
+import { virtualFs, workspaces } from '@angular-devkit/core';
 
 function createHost(tree: Tree): workspaces.WorkspaceHost {
   return {
@@ -36,17 +26,20 @@ function createHost(tree: Tree): workspaces.WorkspaceHost {
 export function plugin(): Rule {
   return async (tree: Tree) => {
     const host = createHost(tree);
-    const { workspace } = await workspaces.readWorkspace('/', host);
-    let { defaultProject } = workspace.extensions;
-    const project = workspace.projects.get(defaultProject as string);
-    if (!project) {
-      throw new SchematicsException(`Invalid project name: ${defaultProject}`);
+
+    // update angular.json 
+    let angularJsonStr = await host.readFile('angular.json');
+    if (angularJsonStr) {
+      let angularJson = JSON.parse(angularJsonStr);
+      let architect = angularJson.projects[angularJson.defaultProject].architect;
+      let outputPath: string = architect.build.options.outputPath;
+      if (outputPath.lastIndexOf('/static') === -1) {
+        architect.build.options.outputPath += '/static';
+        await host.writeFile('angular.json', JSON.stringify(angularJson, null, 2));
+      }
     }
 
-    let angularJson = await host.readFile('angular.json');
-    if (angularJson) {
-      angularJson = JSON.parse(angularJson);
-    }
+    // 
 
     return chain([]);
   };

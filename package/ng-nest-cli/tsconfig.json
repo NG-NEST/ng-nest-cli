@@ -5,10 +5,10 @@
     "baseUrl": ".",
     "rootDir": ".",
     "paths": {
-      "@mfe/ng": [
+      "@ng-nest/cli": [
         "./"
       ],
-      "@mfe/ng/*": [
+      "@ng-nest/cli/*": [
         "./*"
       ]
     },
