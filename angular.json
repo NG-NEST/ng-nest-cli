@@ -3,23 +3,23 @@
   "version": 1,
   "newProjectRoot": "package",
   "projects": {
-    "ng-nest-cli": {
+    "ng-nest-plugin": {
       "projectType": "library",
-      "root": "package/ng-nest-cli",
-      "sourceRoot": "package/ng-nest-cli",
+      "root": "package/plugin",
+      "sourceRoot": "package/plugin",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "package/ng-nest-cli/ng-package.json"
+            "project": "package/plugin/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "package/ng-nest-cli/tsconfig.lib.prod.json"
+              "tsConfig": "package/plugin/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "package/ng-nest-cli/tsconfig.lib.json"
+              "tsConfig": "package/plugin/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -27,13 +27,13 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "package/ng-nest-cli/test.ts",
-            "tsConfig": "package/ng-nest-cli/tsconfig.spec.json",
-            "karmaConfig": "package/ng-nest-cli/karma.conf.js"
+            "main": "package/plugin/test.ts",
+            "tsConfig": "package/plugin/tsconfig.spec.json",
+            "karmaConfig": "package/plugin/karma.conf.js"
           }
         }
       }
     }
   },
-  "defaultProject": "ng-nest-cli"
+  "defaultProject": "ng-nest-plugin"
 }

@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "build": "ng build ng-nest-cli",
-    "test": "ng test ng-nest-cli "
+    "build": "ng build ng-nest-plugin",
+    "test": "ng test ng-nest-plugin "
   },
   "private": true,
   "dependencies": {

@@ -5,10 +5,10 @@
     "baseUrl": ".",
     "rootDir": ".",
     "paths": {
-      "@ng-nest/cli": [
+      "@ng-nest/plugin": [
         "./"
       ],
-      "@ng-nest/cli/*": [
+      "@ng-nest/plugin/*": [
         "./*"
       ]
     },

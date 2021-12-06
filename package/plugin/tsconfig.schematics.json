@@ -15,7 +15,7 @@
     "noUnusedParameters": true,
     "noUnusedLocals": true,
     "rootDir": "schematics",
-    "outDir": "../../dist/ng-nest-cli/schematics",
+    "outDir": "../../dist/ng-nest-plugin/schematics",
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
     "sourceMap": true,

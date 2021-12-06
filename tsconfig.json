@@ -10,8 +10,12 @@
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "paths": {
-      "@ng-nest/ng": ["./dist/ng-nest-cli"],
-      "@ng-nest/ng/*": ["./dist/ng-nest-cli/*"]
+      "@ng-nest/plugin": [
+        "./package/plugin"
+      ],
+      "@ng-nest/plugin/*": [
+        "./package/plugin/*"
+      ]
     },
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
