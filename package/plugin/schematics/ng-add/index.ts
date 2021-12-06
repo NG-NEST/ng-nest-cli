@@ -6,7 +6,9 @@ import { createHost } from '../utils/create-host';
 export function ngAdd(): Rule {
   return chain([
     async (tree: Tree) => {
-      await updateAngularJson(createHost(tree));
+      const host = createHost(tree);
+      await updateAngularJson(host);
+      await updatePackageJson(host);
     },
     (_: Tree, context: SchematicContext) => {
       context.addTask(new NodePackageInstallTask());
@@ -22,9 +24,30 @@ async function updateAngularJson(host: workspaces.WorkspaceHost) {
     let outputPath: string = architect.build.options.outputPath;
     if (outputPath.lastIndexOf('/app') === -1) {
       architect.build.options.outputPath += '/app';
-      await host.writeFile('angular.json', JSON.stringify(angularJson, null, 2));
     }
+    if (!architect.local) {
+      architect.local = architect.build;
+      architect.build.options.outputPath = `../nestjs/plugins/${angularJson.defaultProject}`;
+    }
+    await host.writeFile('angular.json', JSON.stringify(angularJson, null, 2));
   }
 }
 
-// async function updatePackageJson(host: workspaces.WorkspaceHost) {}
+async function updatePackageJson(host: workspaces.WorkspaceHost) {
+  let packageJsonStr = await host.readFile('package.json');
+  if (packageJsonStr) {
+    const packageJson = JSON.parse(packageJsonStr);
+    const { scripts, name } = packageJson || {};
+    scripts.build = `ng build --base-href /${name}/`;
+    if (!scripts.local) {
+      scripts.local = `ng run plugin:local:production`;
+    }
+    if (!scripts.postbuild) {
+      scripts.postbuild = `node ./node_modules/@ng-nest/plugin/scripts/postbuild.js`;
+    }
+    if (!scripts.prelocal) {
+      scripts.prelocal = `node ./node_modules/@ng-nest/plugin/scripts/prelocal.js`;
+    }
+    await host.writeFile('package.json', JSON.stringify(packageJson, null, 2));
+  }
+}
