@@ -26,8 +26,8 @@ async function updateAngularJson(host: workspaces.WorkspaceHost) {
       architect.build.options.outputPath += '/app';
     }
     if (!architect.local) {
-      architect.local = architect.build;
-      architect.build.options.outputPath = `../nestjs/plugins/${angularJson.defaultProject}`;
+      architect.local = JSON.parse(JSON.stringify(architect.build));
+      architect.local.options.outputPath = `../nestjs/plugins/${angularJson.defaultProject}`;
     }
     await host.writeFile('angular.json', JSON.stringify(angularJson, null, 2));
   }
@@ -40,7 +40,7 @@ async function updatePackageJson(host: workspaces.WorkspaceHost) {
     const { scripts, name } = packageJson || {};
     scripts.build = `ng build --base-href /${name}/`;
     if (!scripts.local) {
-      scripts.local = `ng run plugin:local:production`;
+      scripts.local = `ng run ${name}:local:production`;
     }
     if (!scripts.postbuild) {
       scripts.postbuild = `node ./node_modules/@ng-nest/plugin/scripts/postbuild.js`;
