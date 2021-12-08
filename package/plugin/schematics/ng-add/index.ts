@@ -1,5 +1,15 @@
-import { Rule, Tree, chain, SchematicContext } from '@angular-devkit/schematics';
-import { workspaces } from '@angular-devkit/core';
+import {
+  Rule,
+  Tree,
+  chain,
+  SchematicContext,
+  apply,
+  url,
+  applyTemplates,
+  move,
+  mergeWith
+} from '@angular-devkit/schematics';
+import { workspaces, strings, normalize } from '@angular-devkit/core';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import { createHost } from '../utils/create-host';
 
@@ -9,6 +19,16 @@ export function ngAdd(): Rule {
       const host = createHost(tree);
       await updateAngularJson(host);
       await updatePackageJson(host);
+    },
+    (_: Tree) => {
+      const templateSource = apply(url('./files'), [
+        applyTemplates({
+          classify: strings.classify,
+          dasherize: strings.dasherize
+        }),
+        move(normalize(''))
+      ]);
+      return mergeWith(templateSource);
     },
     (_: Tree, context: SchematicContext) => {
       context.addTask(new NodePackageInstallTask());
@@ -24,10 +44,16 @@ async function updateAngularJson(host: workspaces.WorkspaceHost) {
     let outputPath: string = architect.build.options.outputPath;
     if (outputPath.lastIndexOf('/app') === -1) {
       architect.build.options.outputPath += '/app';
+      architect.build.options.baseHref = `/${angularJson.defaultProject}/`;
     }
     if (!architect.local) {
       architect.local = JSON.parse(JSON.stringify(architect.build));
       architect.local.options.outputPath = `../nestjs/plugins/${angularJson.defaultProject}`;
+      architect.local.options.baseHref = '/';
+    }
+    if (architect.serve) {
+      if (!architect.serve.options) architect.serve.options = {};
+      architect.serve.options.proxyConfig = 'proxy.config.json';
     }
     await host.writeFile('angular.json', JSON.stringify(angularJson, null, 2));
   }
@@ -38,7 +64,6 @@ async function updatePackageJson(host: workspaces.WorkspaceHost) {
   if (packageJsonStr) {
     const packageJson = JSON.parse(packageJsonStr);
     const { scripts, name } = packageJson || {};
-    scripts.build = `ng build --base-href /${name}/`;
     if (!scripts.local) {
       scripts.local = `ng run ${name}:local:production`;
     }
