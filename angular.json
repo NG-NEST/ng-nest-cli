@@ -33,6 +33,37 @@
           }
         }
       }
+    },
+    "ng-nest-container": {
+      "projectType": "library",
+      "root": "package/container",
+      "sourceRoot": "package/container",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "package/container/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "package/container/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "package/container/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "package/container/test.ts",
+            "tsConfig": "package/container/tsconfig.spec.json",
+            "karmaConfig": "package/container/karma.conf.js"
+          }
+        }
+      }
     }
   },
   "defaultProject": "ng-nest-plugin"

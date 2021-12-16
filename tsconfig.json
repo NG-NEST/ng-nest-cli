@@ -15,10 +15,16 @@
       ],
       "@ng-nest/plugin/*": [
         "./package/plugin/*"
+      ],
+      "@ng-nest/container": [
+        "./package/container"
+      ],
+      "@ng-nest/container/*": [
+        "./package/container/*"
       ]
     },
     "noFallthroughCasesInSwitch": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,

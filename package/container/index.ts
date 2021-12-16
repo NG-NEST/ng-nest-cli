@@ -1,0 +1,1 @@
+export const CONTAINER = 'NG-NEST-CONTAINER';

@@ -3,12 +3,15 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "build": "ng build ng-nest-plugin",
-    "test": "ng test ng-nest-plugin "
+    "build:plugin": "ng build ng-nest-plugin",
+    "test:plugin": "ng test ng-nest-plugin ",
+    "build:container": "ng build ng-nest-container",
+    "test:container": "ng test ng-nest-container "
   },
   "private": true,
   "dependencies": {
     "@angular/animations": "~13.0.0",
+    "@angular/cdk": "~13.0.0",
     "@angular/common": "~13.0.0",
     "@angular/compiler": "~13.0.0",
     "@angular/core": "~13.0.0",
@@ -24,10 +27,12 @@
     "@angular-devkit/build-angular": "~13.0.2",
     "@angular/cli": "~13.0.2",
     "@angular/compiler-cli": "~13.0.0",
+    "@schematics/angular": "~13.0.0",
     "@types/jasmine": "~3.10.0",
     "@types/node": "^12.11.1",
     "@types/shelljs": "^0.8.9",
     "cpx": "^1.5.0",
+    "sass": "^1.45.0",
     "jasmine-core": "~3.10.0",
     "karma": "~6.3.0",
     "karma-chrome-launcher": "~3.1.0",
