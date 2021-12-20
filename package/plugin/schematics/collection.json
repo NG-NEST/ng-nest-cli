@@ -2,7 +2,7 @@
   "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
   "schematics": {
     "ng-add": {
-      "description": "Add to a plug-in project",
+      "description": "Add to a plugin project",
       "factory": "./ng-add/index#ngAdd"
     }
   }

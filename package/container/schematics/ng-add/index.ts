@@ -51,6 +51,31 @@ export function ngAdd(): Rule {
   ]);
 }
 
+function updatePackageJson(): Rule {
+  return async (tree: Tree) => {
+    const host = createHost(tree);
+    let packageJsonStr = await host.readFile('package.json');
+    if (!packageJsonStr) return noop();
+    const packageJson = JSON.parse(packageJsonStr);
+    const { scripts, name, dependencies } = packageJson || {};
+    if (!scripts.local) {
+      scripts.local = `ng run ${name}:local:production`;
+    }
+    if (!scripts.postbuild) {
+      scripts.postbuild = `node ./node_modules/@ng-nest/container/scripts/postbuild.js`;
+    }
+    if (!scripts.prelocal) {
+      scripts.prelocal = `node ./node_modules/@ng-nest/container/scripts/prelocal.js`;
+    }
+    if (!dependencies['@ng-nest/ui']) {
+      dependencies['@ng-nest/ui'] = '^13.0.0';
+    }
+    await host.writeFile('package.json', JSON.stringify(packageJson, null, 2));
+
+    return noop();
+  };
+}
+
 function updateAngularJson(): Rule {
   return async (tree: Tree) => {
     const host = createHost(tree);
@@ -72,34 +97,10 @@ function updateAngularJson(): Rule {
       architect.serve.options.proxyConfig = 'proxy.config.json';
     }
     if (styles) {
+      styles.unshift('node_modules/@ng-nest/container/style/index.css');
       styles.unshift('node_modules/@ng-nest/ui/style/core/index.css');
     }
     await host.writeFile('angular.json', JSON.stringify(angularJson, null, 2));
-
-    return noop();
-  };
-}
-
-function updatePackageJson(): Rule {
-  return async (tree: Tree) => {
-    const host = createHost(tree);
-    let packageJsonStr = await host.readFile('package.json');
-    if (!packageJsonStr) return noop();
-    const packageJson = JSON.parse(packageJsonStr);
-    const { scripts, name, dependencies } = packageJson || {};
-    if (!scripts.local) {
-      scripts.local = `ng run ${name}:local:production`;
-    }
-    if (!scripts.postbuild) {
-      scripts.postbuild = `node ./node_modules/@ng-nest/container/scripts/postbuild.js`;
-    }
-    if (!scripts.prelocal) {
-      scripts.prelocal = `node ./node_modules/@ng-nest/container/scripts/prelocal.js`;
-    }
-    if (!dependencies['@ng-nest/ui']) {
-      dependencies['@ng-nest/ui'] = '^13.0.0';
-    }
-    await host.writeFile('package.json', JSON.stringify(packageJson, null, 2));
 
     return noop();
   };

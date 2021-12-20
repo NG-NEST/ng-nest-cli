@@ -7,8 +7,8 @@
     "copy:files": "cpx schematics/*/files/** ../../dist/ng-nest-container/schematics/",
     "copy:collection": "cpx schematics/collection.json ../../dist/ng-nest-container/schematics/",
     "build:scripts": "tsc -p tsconfig.scripts.json",
-    "build:scss": "sass ./styles/index.scss ../../dist/ng-nest-container/styles/index.css",
-    "copy:scss": "cpx ./styles/**/* ../../dist/ng-nest-container/styles",
+    "build:scss": "sass ./style/index.scss ../../dist/ng-nest-container/style/index.css --no-source-map",
+    "copy:scss": "cpx ./style/**/* ../../dist/ng-nest-container/style",
     "postbuild": "npm run copy:schemas && npm run copy:files && npm run copy:collection && npm run build:scripts && npm run copy:scss && npm run build:scss"
   },
   "schematics": "./schematics/collection.json",

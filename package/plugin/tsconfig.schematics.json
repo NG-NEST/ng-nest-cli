@@ -18,7 +18,7 @@
     "outDir": "../../dist/ng-nest-plugin/schematics",
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "strictNullChecks": true,
     "target": "es6",
     "types": [
