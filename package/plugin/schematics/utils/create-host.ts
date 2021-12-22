@@ -1,5 +1,4 @@
 import { Tree, SchematicsException } from '@angular-devkit/schematics';
-
 import { virtualFs, workspaces } from '@angular-devkit/core';
 
 export function createHost(tree: Tree): workspaces.WorkspaceHost {

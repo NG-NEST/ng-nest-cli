@@ -15,11 +15,19 @@ import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import { createHost } from '../utils/create-host';
 import { getWorkspace } from '@schematics/angular/utility/workspace';
 import { WorkspaceDefinition } from '@angular-devkit/core/src/workspace';
+import { addModuleImport } from '../utils/root-module';
+
+const addModules = {
+  BrowserAnimationsModule: '@angular/platform-browser/animations',
+  LayoutModule: './layout/layout.module',
+  AppRoutingModule: './app-routing.module'
+};
 
 export function ngAdd(): Rule {
   return chain([
     updatePackageJson(),
     updateAngularJson(),
+    ...Object.entries(addModules).map((x) => addModuleImport(x[0], x[1])),
     updateAppComponentHtml(),
     updateAppComponentSelector(),
     updateIndexHtml(),
@@ -87,7 +95,7 @@ function updateAngularJson(): Rule {
       architect.serve.options.proxyConfig = 'proxy.config.json';
     }
     if (styles) {
-      styles.unshift('node_modules/@ng-nest/container/style/index.css');
+      styles.unshift('node_modules/@ng-nest/plugin/style/index.css');
       styles.unshift('node_modules/@ng-nest/ui/style/core/index.css');
     }
     await host.writeFile('angular.json', JSON.stringify(angularJson, null, 2));
