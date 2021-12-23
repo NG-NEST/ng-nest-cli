@@ -13,17 +13,13 @@ import {
 import { strings, normalize } from '@angular-devkit/core';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import { createHost } from '../utils/create-host';
-import { addComponentImport, addModuleImport } from '../utils/root-module';
+import { addModuleImport } from '../utils/root-module';
 import { getWorkspace } from '@schematics/angular/utility/workspace';
 import { WorkspaceDefinition } from '@angular-devkit/core/src/workspace';
 
 const addModules = {
   BrowserAnimationsModule: '@angular/platform-browser/animations',
-  XSliderModule: '@ng-nest/ui/slider'
-};
-
-const addComponents = {
-  HeaderComponent: './header/header.component'
+  LayoutModule: './layout/layout.module'
 };
 
 export function ngAdd(): Rule {
@@ -31,7 +27,6 @@ export function ngAdd(): Rule {
     updatePackageJson(),
     updateAngularJson(),
     ...Object.entries(addModules).map((x) => addModuleImport(x[0], x[1])),
-    ...Object.entries(addComponents).map((x) => addComponentImport(x[0], x[1])),
     updateAppComponentHtml(),
     updateAppComponentSelector(),
     updateIndexHtml(),
