@@ -28,7 +28,7 @@ export function ngAdd(): Rule {
     updateAngularJson(),
     ...Object.entries(addModules).map((x) => addModuleImport(x[0], x[1])),
     updateAppComponentHtml(),
-    updateAppComponentSelector(),
+    updateAppComponentTs(),
     updateIndexHtml(),
     (_: Tree) => {
       const templateSource = apply(url('./files'), [
@@ -110,7 +110,7 @@ function updateAppComponentHtml(): Rule {
   };
 }
 
-function updateAppComponentSelector(): Rule {
+function updateAppComponentTs(): Rule {
   return async (tree: Tree) => {
     const host = createHost(tree);
     const workspace = (await getWorkspace(tree)) as unknown as WorkspaceDefinition;
@@ -121,6 +121,15 @@ function updateAppComponentSelector(): Rule {
     appComponentStr = appComponentStr.replace(
       "selector: 'app-root'",
       `selector: '${defaultProject}'`
+    );
+    appComponentStr = appComponentStr.replace(
+      "import { Component } from '@angular/core';",
+      `import { Component, ViewEncapsulation } from '@angular/core';`
+    );
+    appComponentStr = appComponentStr.replace(
+      "styleUrls: ['./app.component.css']",
+      `styleUrls: ['./app.component.css'],
+  encapsulation: ViewEncapsulation.ShadowDom`
     );
     await host.writeFile(appComponentTsPath, appComponentStr);
 
