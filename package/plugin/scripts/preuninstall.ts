@@ -5,7 +5,7 @@ import { join, resolve } from 'path';
 import { rm } from 'shelljs';
 
 const pkg = require('../package.json');
-rm('-rf', join(resolve('../../plugins/'), pkg.name));
+rm('-rf', join(resolve('../../views/plugins/'), pkg.name));
 
 const configPath = resolve('../../src/config.json');
 const config = JSON.parse(readFileSync(configPath).toString());

@@ -3,20 +3,20 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'overview',
+    path: 'views/<%= name %>/overview',
     loadChildren: () => import('./pages/overview/overview.module').then((x) => x.OverviewModule)
   },
   {
-    path: 'menu-one',
+    path: 'views/<%= name %>/menu-one',
     loadChildren: () => import('./pages/menu-one/menu-one.module').then((x) => x.MenuOneModule)
   },
   {
-    path: 'menu-two',
+    path: 'views/<%= name %>/menu-two',
     loadChildren: () => import('./pages/menu-two/menu-two.module').then((x) => x.MenuTwoModule)
   },
   {
-    path: '',
-    redirectTo: 'overview',
+    path: 'views/<%= name %>',
+    redirectTo: 'views/<%= name %>/overview',
     pathMatch: 'full'
   }
 ];

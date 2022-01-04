@@ -10,6 +10,7 @@ import { XSliderNode } from '@ng-nest/ui/slider';
 })
 export class HeaderComponent {
   data: XSliderNode[] = [];
+  activatedIndex = 0;
 
   constructor(private httpClient: HttpClient, private location: Location) {}
 
@@ -20,13 +21,21 @@ export class HeaderComponent {
   getPlugins() {
     this.httpClient.get<XSliderNode[]>('/v1/plugins').subscribe((x) => {
       this.data = x;
-      if (x && x.length > 0) {
-        this.nodeChange(x[0]);
-      }
+      this.setLocation();
     });
   }
 
+  setLocation() {
+    const path = this.location.path();
+    for (let item of this.data) {
+      if (path.lastIndexOf(`/${item.id}`) >= 0) {
+        this.activatedIndex = this.data.indexOf(item);
+        break;
+      }
+    }
+  }
+
   nodeChange(node: XSliderNode) {
-    this.location.go(`./${node.id}`);
+    window.location.href = `/views/${node.id}`;
   }
 }

@@ -16,6 +16,7 @@ import { createHost } from '../utils/create-host';
 import { getWorkspace } from '@schematics/angular/utility/workspace';
 import { WorkspaceDefinition } from '@angular-devkit/core/src/workspace';
 import { addModuleImport } from '../utils/root-module';
+import { Schema } from './schema';
 
 const addModules = {
   BrowserAnimationsModule: '@angular/platform-browser/animations',
@@ -23,37 +24,31 @@ const addModules = {
   AppRoutingModule: './app-routing.module'
 };
 
-export function ngAdd(): Rule {
+export function ngAdd(options: Schema): Rule {
   return chain([
-    updatePackageJson(),
+    updatePackageJson(options),
     updateAngularJson(),
     ...Object.entries(addModules).map((x) => addModuleImport(x[0], x[1])),
     updateAppComponentHtml(),
     updateAppComponentTs(),
     updateIndexHtml(),
-    (_: Tree) => {
-      const templateSource = apply(url('./files'), [
-        applyTemplates({
-          classify: strings.classify,
-          dasherize: strings.dasherize
-        }),
-        move(normalize(''))
-      ]);
-      return mergeWith(templateSource);
-    },
+    copyFiles(options),
     (_: Tree, context: SchematicContext) => {
       context.addTask(new NodePackageInstallTask());
     }
   ]);
 }
 
-function updatePackageJson(): Rule {
+function updatePackageJson(options: Schema): Rule {
   return async (tree: Tree) => {
     const host = createHost(tree);
     let packageJsonStr = await host.readFile('package.json');
     if (!packageJsonStr) return noop();
     const packageJson = JSON.parse(packageJsonStr);
     const { scripts, name, dependencies } = packageJson || {};
+    if (options?.description && !packageJson.description) {
+      packageJson.description = options.description;
+    }
     if (!scripts.local) {
       scripts.local = `ng run ${name}:local:production`;
     }
@@ -159,5 +154,22 @@ function updateIndexHtml(): Rule {
     await host.writeFile(indexHtmlPath, indexHtmlStr);
 
     return noop();
+  };
+}
+
+function copyFiles(options: Schema): Rule {
+  return async (tree: Tree) => {
+    const workspace = (await getWorkspace(tree)) as unknown as WorkspaceDefinition;
+    const { defaultProject } = workspace.extensions;
+    const templateSource = apply(url('./files'), [
+      applyTemplates({
+        classify: strings.classify,
+        dasherize: strings.dasherize,
+        name: defaultProject,
+        descirption: options?.description || defaultProject
+      }),
+      move(normalize(''))
+    ]);
+    return mergeWith(templateSource);
   };
 }

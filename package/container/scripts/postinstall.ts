@@ -3,23 +3,21 @@ import { resolve, join } from 'path';
 import { readFileSync, writeFileSync, existsSync } from 'fs';
 
 const pkg = require('../package.json');
-mkdir('-p', join(resolve('../../plugins'), pkg.name));
-cp('-Rf', resolve('./app/*'), join(resolve('../../plugins'), pkg.name));
+const config = require('../config.json');
+mkdir('-p', join(resolve('../../views/containers'), pkg.name));
+cp('-Rf', resolve('./app/*'), join(resolve('../../views/containers'), pkg.name));
 
-const configPath = resolve('../../src/config.json');
-let config;
-if (existsSync(configPath)) {
-  config = JSON.parse(readFileSync(configPath).toString());
+const rootConfigPath = resolve('../../src/config.json');
+let rootConfig;
+if (existsSync(rootConfigPath)) {
+  rootConfig = JSON.parse(readFileSync(rootConfigPath).toString());
 } else {
-  config = { plugins: [] };
+  rootConfig = { containers: [], plugins: [] };
 }
-let plugin = config.plugins.find((x: any) => x.name === pkg.name);
-if (plugin) {
-  plugin = Object.assign(plugin, { version: pkg.version });
+let container = rootConfig.containers.find((x: any) => x.name === pkg.name);
+if (container) {
+  container = Object.assign(container, config);
 } else {
-  config.plugins.push({
-    name: pkg.name,
-    version: pkg.version
-  });
+  rootConfig.containers.push(config);
 }
-writeFileSync(configPath, JSON.stringify(config, null, 2), { encoding: 'utf-8' });
+writeFileSync(rootConfigPath, JSON.stringify(rootConfig, null, 2), { encoding: 'utf-8' });
