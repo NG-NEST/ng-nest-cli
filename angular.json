@@ -64,6 +64,29 @@
           }
         }
       }
+    },
+    "ng-nest-frame": {
+      "projectType": "library",
+      "root": "package/frame",
+      "sourceRoot": "package/frame",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "package/frame/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "package/frame/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "package/frame/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        }
+      }
     }
   },
   "defaultProject": "ng-nest-plugin"

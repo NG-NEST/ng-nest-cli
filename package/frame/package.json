@@ -1,0 +1,22 @@
+{
+  "name": "@ng-nest/frame",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "tsc -p tsconfig.schematics.json",
+    "copy:schemas": "cpx schematics/*/schema.json ../../dist/ng-nest-frame/schematics/",
+    "copy:files": "cpx schematics/*/files/** ../../dist/ng-nest-frame/schematics/",
+    "copy:collection": "cpx schematics/collection.json ../../dist/ng-nest-frame/schematics/",
+    "build:scripts": "tsc -p tsconfig.scripts.json",
+    "postbuild": "npm run copy:schemas && npm run copy:files && npm run copy:collection && npm run build:scripts"
+  },
+  "schematics": "./schematics/collection.json",
+  "peerDependencies": {
+    "shelljs": "^0.8.4"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "nest-add": {
+    "save": "dependencies"
+  }
+}

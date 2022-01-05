@@ -4,9 +4,10 @@
   "scripts": {
     "ng": "ng",
     "build:plugin": "ng build ng-nest-plugin",
-    "test:plugin": "ng test ng-nest-plugin ",
     "build:container": "ng build ng-nest-container",
-    "test:container": "ng test ng-nest-container "
+    "build:frame": "ng build ng-nest-frame",
+    "test:container": "ng test ng-nest-container",
+    "test:plugin": "ng test ng-nest-plugin "
   },
   "private": true,
   "dependencies": {

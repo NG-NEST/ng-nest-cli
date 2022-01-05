@@ -1,0 +1,10 @@
+{
+  "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "nest-add": {
+      "description": "Add ng-nest frame to the NestJS application",
+      "factory": "./nest-add/index#nestAdd",
+      "schema": "./nest-add/schema.json"
+    }
+  }
+}

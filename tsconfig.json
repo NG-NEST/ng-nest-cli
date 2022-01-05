@@ -21,6 +21,12 @@
       ],
       "@ng-nest/container/*": [
         "./package/container/*"
+      ],
+      "@ng-nest/frame": [
+        "./package/frame"
+      ],
+      "@ng-nest/frame/*": [
+        "./package/frame/*"
       ]
     },
     "noFallthroughCasesInSwitch": true,

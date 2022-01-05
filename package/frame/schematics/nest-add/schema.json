@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "SchematicsNestAdd",
+  "title": "Project Schema",
+  "type": "object",
+  "properties": {
+    "description": {
+      "description": "The default is the project name",
+      "type": "string"
+    }
+  }
+}
