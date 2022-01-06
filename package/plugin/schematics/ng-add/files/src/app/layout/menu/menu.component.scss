@@ -6,6 +6,10 @@
   left: 0;
   top: 3.25rem;
   box-shadow: 0 0.125rem 0.625rem 0 rgba(0, 0, 0, 0.14);
+  &.development {
+    height: 100%;
+    top: 0;
+  }
   > section {
     position: relative;
     height: 100%;

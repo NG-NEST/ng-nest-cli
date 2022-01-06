@@ -18,6 +18,11 @@ const routes: Routes = [
     path: 'views/<%= name %>',
     redirectTo: 'views/<%= name %>/overview',
     pathMatch: 'full'
+  },
+  {
+    path: '',
+    redirectTo: 'views/<%= name %>/overview',
+    pathMatch: 'full'
   }
 ];
 

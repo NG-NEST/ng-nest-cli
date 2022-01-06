@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-content',
@@ -6,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./content.component.scss']
 })
 export class ContentComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
+  @HostBinding('class.development') get development() {
+    return !environment.production;
   }
 
+  constructor() {}
+
+  ngOnInit(): void {}
 }

@@ -2,4 +2,7 @@
   display: block;
   padding-top: 3.25rem;
   padding-left: 14rem;
+  &.development {
+    padding-top: 0;
+  }
 }

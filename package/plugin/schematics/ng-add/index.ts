@@ -78,7 +78,7 @@ function updateAngularJson(): Rule {
     let styles: string[] = architect.build.options.styles;
     if (outputPath.lastIndexOf('/app') === -1) {
       architect.build.options.outputPath += '/app';
-      architect.build.options.baseHref = `/${angularJson.defaultProject}/`;
+      architect.build.options.baseHref = `/`;
     }
     if (!architect.local) {
       architect.local = JSON.parse(JSON.stringify(architect.build));

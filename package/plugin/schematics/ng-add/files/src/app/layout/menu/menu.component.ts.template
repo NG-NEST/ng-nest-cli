@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { XMenuNode } from '@ng-nest/ui/menu';
 import { LayoutService } from 'src/app/services/layout.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-menu',
@@ -10,6 +11,9 @@ import { LayoutService } from 'src/app/services/layout.service';
   styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent {
+  @HostBinding('class.development') get development() {
+    return !environment.production;
+  }
   constructor(public layout: LayoutService, private router: Router, private location: Location) {}
 
   ngOnInit() {

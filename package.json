@@ -1,13 +1,14 @@
 {
   "name": "@ng-nest/cli",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
     "build:plugin": "ng build ng-nest-plugin",
     "build:container": "ng build ng-nest-container",
     "build:frame": "ng build ng-nest-frame",
     "test:container": "ng test ng-nest-container",
-    "test:plugin": "ng test ng-nest-plugin "
+    "test:plugin": "ng test ng-nest-plugin",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
   },
   "private": true,
   "dependencies": {
@@ -32,8 +33,10 @@
     "@types/jasmine": "~3.10.0",
     "@types/node": "^12.11.1",
     "@types/shelljs": "^0.8.9",
+    "conventional-changelog": "^3.1.25",
+    "conventional-changelog-cli": "^2.2.2",
     "cpx": "^1.5.0",
-    "sass": "^1.45.0",
+    "cz-conventional-changelog": "^3.3.0",
     "jasmine-core": "~3.10.0",
     "karma": "~6.3.0",
     "karma-chrome-launcher": "~3.1.0",
@@ -41,6 +44,7 @@
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
     "ng-packagr": "^13.0.0",
+    "sass": "^1.45.0",
     "shelljs": "^0.8.4",
     "typescript": "~4.4.3"
   }
