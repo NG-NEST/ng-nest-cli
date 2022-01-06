@@ -57,9 +57,9 @@ function updateAppControllerTs(): Rule {
     if (!appControllerStr) return noop();
     appControllerStr = appControllerStr.replace(
       `@Get()
-    getHello(): string {
-      return this.appService.getHello();
-    }`,
+  getHello(): string {
+    return this.appService.getHello();
+  }`,
       ''
     );
     await host.writeFile('src/app.controller.ts', appControllerStr);
